@@ -2,8 +2,9 @@
   "name": "shortyoururls",
   "version": "1.0.0",
   "description": "Make shorter links from longer urls.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
