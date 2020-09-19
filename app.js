@@ -1,10 +1,12 @@
+require("dotenv").config({ path: `.env.${process.env.NODE_ENV || "dev"}` });
+
 const express = require("express");
 
 const bodyParser = require("body-parser");
 
 const app = express();
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 8000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 

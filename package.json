@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
+    "start-prod": "export NODE_ENV=production || SET \"NODE_ENV=production\" && sudo node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
