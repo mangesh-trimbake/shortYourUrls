@@ -12,6 +12,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());
 
+// Configuring the database
+require("./config/database/mongoose");
+
 app.get("/", (req, res) => {
   res.json({ message: "Hello World" });
 });
