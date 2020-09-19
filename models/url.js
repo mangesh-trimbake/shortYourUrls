@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 // const crudPlugin = require('./plugins/crud_plugin.js');
 const Schema = mongoose.Schema;
 
+const shortId = require("shortid");
+
 const urlSchema = new Schema(
   {
     full_url: {
@@ -11,7 +13,7 @@ const urlSchema = new Schema(
     shorten_url: {
       type: String,
       required: true,
-      unique: true,
+      default: shortId.generate,
     },
     clicks: {
       type: Number,
