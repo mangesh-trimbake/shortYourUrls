@@ -1,0 +1,19 @@
+{
+  "name": "shortyoururls",
+  "version": "1.0.0",
+  "description": "Make shorter links from longer urls.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mangesh-trimbake/shortYourUrls.git"
+  },
+  "author": "Mangesh Trimbake (Bashzcrypt)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mangesh-trimbake/shortYourUrls/issues"
+  },
+  "homepage": "https://github.com/mangesh-trimbake/shortYourUrls#readme"
+}
