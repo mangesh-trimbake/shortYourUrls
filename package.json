@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/mangesh-trimbake/shortYourUrls/issues"
   },
-  "homepage": "https://github.com/mangesh-trimbake/shortYourUrls#readme"
+  "homepage": "https://github.com/mangesh-trimbake/shortYourUrls#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.6",
+    "nodemon": "^2.0.4"
+  }
 }
