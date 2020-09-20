@@ -42,6 +42,16 @@ const getById = (req, res, next) => {
   );
 };
 
+const getByShortenUrl = async (req, res, next) => {
+  const url = await Url.findOne({ shorten_url: req.params.shorten_url });
+  if (url == null) return res.sendStatus(404);
+
+  url.clicks++;
+  url.save();
+
+  res.redirect(url.full_url);
+};
+
 const createNew = (req, res, next) => {
   Url.countDocuments({}).exec((err, count) => {
     if (err) {
@@ -124,6 +134,7 @@ const search = (req, res, next) => {
 module.exports = {
   getAll,
   getById,
+  getByShortenUrl,
   createNew,
   updateById,
   search,

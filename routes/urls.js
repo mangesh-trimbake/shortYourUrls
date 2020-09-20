@@ -9,7 +9,7 @@ router.get("/", urls.getAll);
 router.get("/search", urls.search);
 
 // GET /:id - Fetch Url by ID
-router.get("/:id", urls.getById);
+router.get("/:shorten_url", urls.getByShortenUrl);
 
 // POST / - Create new Url
 router.post("/", urls.createNew);
