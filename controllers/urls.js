@@ -1,4 +1,5 @@
 const Url = require("../models/url.js");
+const shortId = require("shortid");
 
 const getAll = (req, res, next) => {
   Url.find(req.query).then(
@@ -58,25 +59,56 @@ const getByShortenUrl = async (req, res, next) => {
 };
 
 const createNew = (req, res, next) => {
-  // console.log("body", req.body);
-  Url.create(req.body).then(
-    (urls) => {
-      if (urls != null) {
-        res.status(201).send({
-          status: "success",
-          message: "Url created",
-          data: { urls: urls },
-        });
-      } else {
-        res.status(404).send({
-          status: "error",
-          message: "Url couldn't be created!",
-          data: { urls: urls },
-        });
-      }
-    },
-    (err) => next(err)
-  );
+  console.log("body", req.body);
+
+  // if (req.body.shorten_url) {
+  //   const url = await Url.findOne({ shorten_url: req.params.shorten_url });
+  //   if (url) {
+  //     res.status(201).send({
+  //       status: "error",
+  //       message: "Key already exists.",
+  //       data: {},
+  //     });
+  //   }
+  // }
+
+  console.log("shorten_url from FE", req.body.shorten_url);
+  if (req.body.shorten_url == null) {
+    req.body.shorten_url = shortId.generate();
+  }
+  Url.findOne({ shorten_url: req.body.shorten_url })
+    .then(
+      (url) => {
+        if (url != null) {
+          res.status(201).send({
+            status: "error",
+            message: "Key already exists. please use another or try without",
+            data: {},
+          });
+        }
+      },
+      (err) => next(err)
+    )
+    .then(() => {
+      Url.create(req.body).then(
+        (urls) => {
+          if (urls != null) {
+            res.status(201).send({
+              status: "success",
+              message: "Url created",
+              data: { urls: urls },
+            });
+          } else {
+            res.status(404).send({
+              status: "error",
+              message: "Url couldn't be created!",
+              data: { urls: urls },
+            });
+          }
+        },
+        (err) => next(err)
+      );
+    });
 };
 
 const updateById = (req, res, next) => {
