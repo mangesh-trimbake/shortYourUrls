@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+
+    <title>Short Your Urls</title>
+
+    <style></style>
+    <style>
+      body {
+        /* position: relative; */
+        background-color: #343a40;
+        background: url(/img/bg-masthead1.jpg) no-repeat center center fixed;
+        background-size: cover;
+        height: 100%;
+        /* padding-top: 8rem; */
+        /* padding-bottom: 8rem; */
+      }
+      header.masthead {
+        position: relative;
+        /* background-color: #343a40; */
+        /* background: url(/img/bg-masthead.jpg) no-repeat center center; */
+        /* background-size: cover; */
+        padding-top: 8rem;
+        padding-bottom: 8rem;
+      }
+      .text-white {
+        color: #fff !important;
+      }
+      .text-center {
+        text-align: center !important;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="masthead text-white text-center">
+      <div class="overlay"></div>
+      <div class="container text-center">
+        <div class="row">
+          <div class="col-xl-9 mx-auto">
+            <h1 class="mb-5" style="color: #007bff">Short Your Urls</h1>
+          </div>
+          <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+            <form onsubmit="return false" id="shor_url_from">
+              <div class="form-row">
+                <div class="col-12 col-md-9 mb-2 mb-md-0">
+                  <input
+                    required
+                    placeholder="Enter your url..."
+                    type="url"
+                    name="full_url"
+                    id="full_url"
+                    class="form-control form-control-lg"
+                  />
+                </div>
+                <div class="col-12 col-md-3">
+                  <button
+                    type="submit"
+                    class="btn btn-block btn-lg btn-primary"
+                  >
+                    get short
+                  </button>
+                </div>
+              </div>
+            </form>
+            <br />
+            <br />
+            <table
+              class="table"
+              style="display: none; background: white"
+              id="url_table"
+            >
+              <thead>
+                <tr>
+                  <th>Full URL</th>
+                  <th>Short URL</th>
+                </tr>
+              </thead>
+              <tbody id="url_tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+    <script>
+      $("#shor_url_from").on("submit", function () {
+        var fd = new FormData();
+        var host = window.location.host;
+        var base_url = window.location.origin;
+
+        $("#url_table").show();
+        $("#url_tbody").empty();
+
+        fd.append("full_url", $("#full_url").val());
+        $.ajax({
+          type: "POST",
+          url: "/",
+          contentType: false,
+          processData: false,
+          data: fd,
+          xhrFields: {
+            withCredentials: true,
+          },
+          success: function (response) {
+            console.log("res", response);
+            if (response.status == "success") {
+              urls = response.data.urls;
+              console.log("urls", urls);
+              if (urls) {
+                $("#url_table").show();
+
+                // for (i in urls) {
+                var url = urls;
+                $("#url_tbody").append(
+                  "\
+                    <tr>\
+                        <td td >\
+                            <a href=" +
+                    url.full_url +
+                    ">" +
+                    url.full_url +
+                    "</a>\
+                        </td>\
+                        <td>\
+                                <a id='short_url' href=" +
+                    host +
+                    "/" +
+                    url.shorten_url +
+                    ">" +
+                    host +
+                    "/" +
+                    url.shorten_url +
+                    "</a>\
+                      <button id='copy_url' class='btn btn-primary' type='button' >Copy</button>  </td>\
+                    </tr >\
+                  "
+                );
+                // }
+                $("#full_url").val("");
+              }
+            } else if (response.status == "error") {
+              // alert("loader ended");
+              swal("Error!", response.message, "error").catch(swal.noop);
+            }
+          },
+          error: function (error) {
+            swal("Error!", response.message, "error").catch(swal.noop);
+          },
+        });
+      });
+
+      $(document).on("click", "#copy_url", function () {
+        // alert("click");
+        // $("#short_url").attr("href").select();
+        // document.execCommand("copy");
+
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($("#short_url").attr("href")).select();
+        document.execCommand("copy");
+        $temp.remove();
+      });
+    </script>
+  </body>
+</html>

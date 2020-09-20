@@ -1,0 +1,31 @@
+{
+  "name": "shortyoururls",
+  "version": "1.0.0",
+  "description": "Make shorter links from longer urls.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "start-prod": "export NODE_ENV=production || SET \"NODE_ENV=production\" && sudo node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mangesh-trimbake/shortYourUrls.git"
+  },
+  "author": "Mangesh Trimbake (Bashzcrypt)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mangesh-trimbake/shortYourUrls/issues"
+  },
+  "homepage": "https://github.com/mangesh-trimbake/shortYourUrls#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.6",
+    "multer": "^1.4.2",
+    "nodemon": "^2.0.4",
+    "shortid": "^2.2.15"
+  }
+}
