@@ -50,7 +50,7 @@
           <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
             <form onsubmit="return false" id="shor_url_from">
               <div class="form-row">
-                <div class="col-12 col-md-9 mb-2 mb-md-0">
+                <div class="col-12 col-md-12 mb-2">
                   <input
                     required
                     placeholder="Enter your url..."
@@ -60,7 +60,29 @@
                     class="form-control form-control-lg"
                   />
                 </div>
-                <div class="col-12 col-md-3">
+
+                <div class="col-12 col-md-12 mb-2" style="text-align: left">
+                  <div class="checkbox">
+                    <label style="color: #007bff"
+                      ><input type="checkbox" id="shorten_url_chbx" />
+                      Make your prefrence key as short url.
+                    </label>
+                  </div>
+                </div>
+                <div class="col-12 col-md-12 mb-2">
+                  <input
+                    placeholder="Enter your prefrence key for short url..."
+                    type="text"
+                    name="shorten_url"
+                    id="shorten_url"
+                    class="form-control form-control-lg"
+                    style="display: none"
+                    minlength="9"
+                    maxlength="9"
+                    pattern="[a-zA-Z0-9]+"
+                  />
+                </div>
+                <div class="col-12 col-md-12 mb-2">
                   <button
                     type="submit"
                     class="btn btn-block btn-lg btn-primary"
@@ -100,10 +122,15 @@
         var host = window.location.host;
         var base_url = window.location.origin;
 
-        $("#url_table").show();
+        $("#url_table").hide();
         $("#url_tbody").empty();
 
         fd.append("full_url", $("#full_url").val());
+
+        if ($("#shorten_url_chbx").is(":checked")) {
+          fd.append("shorten_url", $("#shorten_url").val());
+        }
+
         $.ajax({
           type: "POST",
           url: "/",
@@ -149,6 +176,7 @@
                 );
                 // }
                 $("#full_url").val("");
+                $("#shorten_url").val("");
               }
             } else if (response.status == "error") {
               // alert("loader ended");
@@ -171,6 +199,15 @@
         $temp.val($("#short_url").attr("href")).select();
         document.execCommand("copy");
         $temp.remove();
+      });
+
+      $("#shorten_url_chbx").on("change", function () {
+        // alert($("#shorten_url_chbx").is(":checked"));
+        console.log($("#shorten_url_chbx").is(":checked"));
+        // if ($("#shorten_url_chbx").is(":checked")) {
+        //   $("#shorten_url").show();
+        // }
+        $("#shorten_url").toggle();
       });
     </script>
   </body>

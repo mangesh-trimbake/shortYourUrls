@@ -13,7 +13,8 @@ const urlSchema = new Schema(
     shorten_url: {
       type: String,
       required: true,
-      default: shortId.generate,
+      unique: true,
+      // default: shortId.generate,
     },
     clicks: {
       type: Number,
