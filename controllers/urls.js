@@ -4,11 +4,16 @@ const getAll = (req, res, next) => {
   Url.find(req.query).then(
     (urls) => {
       if (urls != null) {
-        res.status(200).send({
-          status: "success",
-          message: "All Urls",
-          data: { urls: urls },
-        });
+        if (req.xhr) {
+          //the request is ajax call
+          res.status(200).send({
+            status: "success",
+            message: "All Urls",
+            data: { urls: urls },
+          });
+        }
+
+        res.render("index", { urls: urls });
       } else {
         res.status(404).send({
           status: "error",
@@ -53,34 +58,25 @@ const getByShortenUrl = async (req, res, next) => {
 };
 
 const createNew = (req, res, next) => {
-  Url.countDocuments({}).exec((err, count) => {
-    if (err) {
-      res.status(404).send({
-        status: "error",
-        message: "Url couldn't be created!",
-        data: { urls: {} },
-      });
-    }
-
-    Url.create(req.body).then(
-      (urls) => {
-        if (urls != null) {
-          res.status(201).send({
-            status: "success",
-            message: "Url created",
-            data: { urls: urls },
-          });
-        } else {
-          res.status(404).send({
-            status: "error",
-            message: "Url couldn't be created!",
-            data: { urls: urls },
-          });
-        }
-      },
-      (err) => next(err)
-    );
-  });
+  // console.log("body", req.body);
+  Url.create(req.body).then(
+    (urls) => {
+      if (urls != null) {
+        res.status(201).send({
+          status: "success",
+          message: "Url created",
+          data: { urls: urls },
+        });
+      } else {
+        res.status(404).send({
+          status: "error",
+          message: "Url couldn't be created!",
+          data: { urls: urls },
+        });
+      }
+    },
+    (err) => next(err)
+  );
 };
 
 const updateById = (req, res, next) => {
