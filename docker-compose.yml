@@ -1,0 +1,22 @@
+ersion: '3.6'
+services:
+
+  app:
+
+    container_name: shorturl
+    restart: always
+    build: .
+    ports:
+      - 80:8080
+    links:
+      - mongo
+    environment:
+      - MONGODB_URI=${MONGODB_URI:-mongodb://mongo:27017/shortyoururls}
+      - NODE_ENV=production
+
+  mongo:
+
+    container_name: mongo
+    image: mongo
+    ports:
+      - 27017:27017
